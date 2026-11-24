@@ -1,0 +1,35 @@
+rules:
+  - id: dart-bad-certificate-callback
+    languages: [dart]
+    severity: ERROR
+    message: badCertificateCallback returns true and disables TLS certificate validation
+    pattern-either:
+      - pattern: $X.badCertificateCallback = (...) => true
+      - pattern: $X.badCertificateCallback = (...) { return true; }
+    metadata:
+      category: tls-validation
+      severity: high
+  - id: dart-insecure-http-url
+    languages: [dart]
+    severity: WARNING
+    message: Cleartext http:// URL in use
+    pattern-regex: "[\"']http://(?!localhost|127\\.0\\.0\\.1|10\\.0\\.2\\.2)[^\"']+[\"']"
+    metadata:
+      category: cleartext-transport
+      severity: medium
+  - id: dart-sensitive-shared-preferences
+    languages: [dart]
+    severity: WARNING
+    message: Sensitive value stored in SharedPreferences
+    pattern-regex: "\\.set(String|StringList|Int|Bool|Double)\\(\\s*[\"'][^\"']*(token|password|senha|secret|cpf)[^\"']*[\"']"
+    metadata:
+      category: insecure-storage
+      severity: medium
+  - id: dart-sensitive-logging
+    languages: [dart]
+    severity: WARNING
+    message: Sensitive data written to logs
+    pattern-regex: "\\b(print|debugPrint|log)\\([^)]*(token|password|email|cpf)"
+    metadata:
+      category: sensitive-logging
+      severity: medium

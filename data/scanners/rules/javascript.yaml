@@ -1,0 +1,44 @@
+rules:
+  - id: js-eval-usage
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: eval executes arbitrary code
+    pattern: eval(...)
+    metadata:
+      category: code-injection
+      severity: high
+  - id: js-child-process-exec-dynamic
+    languages: [javascript, typescript]
+    severity: ERROR
+    message: child_process.exec called with a dynamic command
+    pattern-either:
+      - pattern: child_process.exec(`...${$X}...`, ...)
+      - pattern: child_process.exec($A + $B, ...)
+      - pattern: exec(`...${$X}...`, ...)
+      - pattern: exec($A + $B, ...)
+    metadata:
+      category: command-injection
+      severity: high
+  - id: js-permissive-cors
+    languages: [javascript, typescript]
+    severity: WARNING
+    message: CORS configured to accept any origin
+    pattern-either:
+      - pattern: "cors({..., origin: true, ...})"
+      - pattern: 'cors({..., origin: "*", ...})'
+      - pattern: cors()
+    metadata:
+      category: cors
+      severity: medium
+  - id: js-firestore-field-from-request
+    languages: [javascript, typescript]
+    severity: WARNING
+    message: Firestore query field taken directly from request input
+    pattern-either:
+      - pattern: $Q.where(req.query.$F, ...)
+      - pattern: $Q.where(req.body.$F, ...)
+      - pattern: $Q.orderBy(req.query.$F, ...)
+      - pattern: $Q.orderBy(req.body.$F, ...)
+    metadata:
+      category: query-injection
+      severity: medium
