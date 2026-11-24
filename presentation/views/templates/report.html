@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security report - $repository_name</title>
+<style>
+:root{--bg:#fff;--fg:#1c2330;--muted:#5b6678;--card:#f5f7fa;--border:#d6dbe3;--accent:#2f6fdb;--accent2:#d9822b;--bar:#2f6fdb;--bar2:#d9822b}
+@media (prefers-color-scheme:dark){:root{--bg:#10141b;--fg:#e6e9ef;--muted:#9aa5b8;--card:#181e28;--border:#2b3442;--accent:#6aa3ff;--accent2:#f0a85a;--bar:#6aa3ff;--bar2:#f0a85a}}
+*{box-sizing:border-box}
+body{margin:0;padding:16px;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,sans-serif}
+main{max-width:1100px;margin:0 auto}
+h1{font-size:1.6rem;margin:0 0 4px}
+h2{font-size:1.2rem;margin:32px 0 12px;border-bottom:1px solid var(--border);padding-bottom:4px}
+.muted{color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px}
+.card .value{font-size:1.6rem;font-weight:600}
+.charts{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+figure{margin:0;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px}
+figcaption{font-weight:600;margin-bottom:8px}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--fg);font-size:11px}
+svg .axis{stroke:var(--border)}
+svg .bar{fill:var(--bar)}
+svg .bar2{fill:var(--bar2)}
+svg .line{fill:none;stroke:var(--accent);stroke-width:2}
+svg .dot{fill:var(--accent)}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);white-space:nowrap}
+th{background:var(--card)}
+.warnings li{margin:4px 0}
+@media (max-width:600px){body{padding:12px}.card .value{font-size:1.3rem}}
+</style>
+</head>
+<body>
+<main>
+<h1>Security report: $repository_name</h1>
+<div class="muted">Gerado em $generated_at</div>
+<div class="cards">
+<div class="card"><div class="muted">Exposição crítica</div><div class="value">$critical_exposure</div></div>
+<div class="card"><div class="muted">Tempo médio de correção (dias)</div><div class="value">$mean_time_to_fix</div></div>
+<div class="card"><div class="muted">Achados</div><div class="value">$finding_count</div></div>
+<div class="card"><div class="muted">Registros de patch lag</div><div class="value">$patch_lag_count</div></div>
+</div>
+<h2>Gráficos</h2>
+<div class="charts">
+<figure><figcaption>Patch lag por severidade (mediana e p90, dias)</figcaption>$chart_patch_lag</figure>
+<figure><figcaption>Curva de libyears</figcaption>$chart_libyears</figure>
+<figure><figcaption>Achados por categoria</figcaption>$chart_category</figure>
+<figure><figcaption>Achados por módulo</figcaption>$chart_module</figure>
+<figure><figcaption>Achados por mês</figcaption>$chart_month</figure>
+</div>
+<h2>Patch lag</h2>
+<div class="table-wrap">$table_patch_lag</div>
+<h2>Achados</h2>
+<div class="table-wrap">$table_findings</div>
+$section_authors
+<h2>Avisos</h2>
+$warnings_block
+</main>
+</body>
+</html>
