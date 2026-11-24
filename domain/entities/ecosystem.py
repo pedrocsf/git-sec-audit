@@ -1,0 +1,2 @@
+PUB_ECOSYSTEM = "Pub"
+NPM_ECOSYSTEM = "npm"
